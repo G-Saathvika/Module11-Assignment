@@ -1,0 +1,65 @@
+Problem-1:
+
+Insertion Anamoaly-
+Given combination of VisitDate and ProvNo as primary key.
+S0 both keys are necessary for inserting a new row.
+
+Deletion Anamoly-
+If we want to delete provider D2 we'll loose the information of visit V10021.
+
+Updation Anamoly-
+If we change ProvSpeciality where ProvNo is D2, two rows have to be changed.
+
+
+Problem-2:
+
+PatNo -> PatAge
+PatZip9 ->  PatCity
+VisitNo  ->  VisitDate 
+PatNo ->  PatZip9 
+ProvNo ->  ProvSpecialty
+VisitNo  ->  PatNo
+VisitNo, ProvNo ->  Diagnosis
+ProvNo -> ProvEmail
+ProvEmail -> ProvNo
+
+
+After normalization:
+
+PatNo -> PatAge,PAtZip
+PatZip -> PatCity
+
+ZIPCODE(PatZip,PatCity)
+PATIENT(PatNo,PatAge,PatZip) FOREIGN KEY (PatZip) references ZIPCODE
+
+VisitNo -> VisitDate,PatNo
+VISIT(VisiNo,VisitDate,PatNo) FOREIGN KEY (PatNo) references PATIENT
+
+ProvNo -> ProvSpeciality,ProvEmail
+PROVIDER(ProvNo,ProvSpeciality,ProvEmail) UNIQUE (ProvEmail)
+
+ProvNo,VisitN0 -> Diagnosis
+DIAGNOSIS(ProvNo,VisitNo,Diagnosis)
+FOREIGN KEY (ProvNo) REFERENCES PROVIDER
+FOREIGN KEY (VisitNo) REFERENCES VISIT
+
+
+Problem-3:
+
+Student(StdNo,StdName,StdEmail,StdAddress,StdCity,StdState,StdZip)
+UNIQUE (STdEmail)
+
+Lender(LenderNo,LenderName) UNIQUE (LenderName)
+
+INstitution(InstNo,INstName,InstMascot) UNIQUE (InstName)
+
+
+Problem-4:
+
+OrdNo -> ItemNo (1,2),(3,4) 
+OrdNo -> QtyOrd(3,4)
+OrdNo -> CustNo None
+OrdNo -> CUstBal None
+OrdNo -> CustDisc None
+OrdNo -> ItemPrice (1,2),(3,4)
+OrdNo -> OrdDate None
